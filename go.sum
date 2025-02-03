@@ -2,3 +2,5 @@ github.com/golangpoke/nlog v1.0.0 h1:0P3Rz/fH2wN1J88uS3NNjK6jwf5bjZOY+Dwcm8L3Mik
 github.com/golangpoke/nlog v1.0.0/go.mod h1:fAsOCbdIJRQoxxa57Ca2CyMvjXFGh6zEohBhWgWIJ1U=
 github.com/golangpoke/nlog v1.0.1 h1:68/fs8YK8FhUQOB3Y2ksf+CdRaCtAKVMZ35Hxty+niM=
 github.com/golangpoke/nlog v1.0.1/go.mod h1:fAsOCbdIJRQoxxa57Ca2CyMvjXFGh6zEohBhWgWIJ1U=
+github.com/golangpoke/nlog v1.0.2 h1:TrQN0TkUdTnCi5AInl01jPliMEiIGwid+MjzsVvrDb0=
+github.com/golangpoke/nlog v1.0.2/go.mod h1:fAsOCbdIJRQoxxa57Ca2CyMvjXFGh6zEohBhWgWIJ1U=

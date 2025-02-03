@@ -41,9 +41,9 @@ func Logger() httper.Middleware {
 			s := fmt.Sprintf("method:%s status:%d url:%s", c.Method(), c.StatusCode(), c.URLPath())
 			switch c.StatusCode() {
 			case http.StatusOK:
-				nlog.Option(nlog.NoSource()).INFOf(s)
+				nlog.NoSource().INFOf(s)
 			default:
-				nlog.Option(nlog.NoSource()).WARNf(s)
+				nlog.NoSource().WARNf(s)
 			}
 		})
 	}
