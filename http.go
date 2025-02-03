@@ -10,7 +10,7 @@ import (
 
 type Middleware func(next http.Handler) http.Handler
 
-type serveMux struct {
+type ServeMux struct {
 	mux *http.ServeMux
 	// root handle
 	IsBreakRootRouter bool
@@ -22,8 +22,8 @@ type serveMux struct {
 	middlewares []Middleware
 }
 
-func NewServeMux() *serveMux {
-	return &serveMux{
+func NewServeMux() *ServeMux {
+	return &ServeMux{
 		mux: http.NewServeMux(),
 		// root handle
 		IsBreakRootRouter: true,
@@ -35,17 +35,17 @@ func NewServeMux() *serveMux {
 	}
 }
 
-func (sm *serveMux) Use(middleware ...Middleware) {
+func (sm *ServeMux) Use(middleware ...Middleware) {
 	sm.middlewares = append(sm.middlewares, middleware...)
 }
 
-func (sm *serveMux) Group(prefix string) *serveMux {
+func (sm *ServeMux) Group(prefix string) *ServeMux {
 	middlewares := make([]Middleware, 0)
 	// add middlewares of parent serve mux,but not root serve mux
 	if !sm.isRootGroup {
 		middlewares = append(middlewares, sm.middlewares...)
 	}
-	newServeMux := &serveMux{
+	newServeMux := &ServeMux{
 		mux:               sm.mux,
 		IsBreakRootRouter: sm.IsBreakRootRouter,
 		NotFoundHandler:   sm.NotFoundHandler,
@@ -57,23 +57,23 @@ func (sm *serveMux) Group(prefix string) *serveMux {
 	return newServeMux
 }
 
-func (sm *serveMux) GET(router string, handler http.Handler) {
+func (sm *ServeMux) GET(router string, handler http.Handler) {
 	sm.registerRouter(http.MethodGet, router, handler)
 }
 
-func (sm *serveMux) POST(router string, handler http.Handler) {
+func (sm *ServeMux) POST(router string, handler http.Handler) {
 	sm.registerRouter(http.MethodPost, router, handler)
 }
 
-func (sm *serveMux) PUT(router string, handler http.Handler) {
+func (sm *ServeMux) PUT(router string, handler http.Handler) {
 	sm.registerRouter(http.MethodPut, router, handler)
 }
 
-func (sm *serveMux) DELETE(router string, handler http.Handler) {
+func (sm *ServeMux) DELETE(router string, handler http.Handler) {
 	sm.registerRouter(http.MethodDelete, router, handler)
 }
 
-func (sm *serveMux) registerRouter(method string, router string, handler http.Handler) {
+func (sm *ServeMux) registerRouter(method string, router string, handler http.Handler) {
 	// use middlewares of not root serve mux
 	if !sm.isRootGroup {
 		handler = sm.useMiddlewares(handler, sm.middlewares...)
@@ -83,11 +83,11 @@ func (sm *serveMux) registerRouter(method string, router string, handler http.Ha
 	sm.mux.Handle(router, handler)
 }
 
-func (sm *serveMux) Routes() map[string]string {
+func (sm *ServeMux) Routes() map[string]string {
 	return sm.routers
 }
 
-func (sm *serveMux) Start(addr string) error {
+func (sm *ServeMux) Start(addr string) error {
 	var handler http.Handler
 	handler = sm.mux
 	if sm.IsBreakRootRouter {
@@ -98,7 +98,7 @@ func (sm *serveMux) Start(addr string) error {
 	return http.ListenAndServe(addr, handler)
 }
 
-func (sm *serveMux) breakRootRouterHandler(mux *http.ServeMux) http.Handler {
+func (sm *ServeMux) breakRootRouterHandler(mux *http.ServeMux) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		_, pattern := mux.Handler(r)
 		rootRouter := fmt.Sprintf("%s %s", r.Method, "/")
@@ -111,7 +111,7 @@ func (sm *serveMux) breakRootRouterHandler(mux *http.ServeMux) http.Handler {
 	})
 }
 
-func (sm *serveMux) useMiddlewares(handler http.Handler, middlewares ...Middleware) http.Handler {
+func (sm *ServeMux) useMiddlewares(handler http.Handler, middlewares ...Middleware) http.Handler {
 	l := len(sm.middlewares) - 1
 	// use middlewares reversely
 	for i := l; i >= 0; i-- {
