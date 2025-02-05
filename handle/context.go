@@ -2,6 +2,9 @@ package handle
 
 import (
 	"encoding/json"
+	"github.com/go-playground/validator/v10"
+	"github.com/golangpoke/nlog"
+	"io"
 	"net/http"
 )
 
@@ -39,7 +42,27 @@ func (c *Context) Method() string {
 }
 
 func (c *Context) BindJSON(data any) error {
-	return json.NewDecoder(c.request.Body).Decode(data)
+	body, err := io.ReadAll(c.request.Body)
+	if err != nil {
+		return nlog.Catch(err)
+	}
+	err = json.Unmarshal(body, data)
+	if err != nil {
+		return nlog.Catch(err)
+	}
+	return nil
+}
+
+func (c *Context) BindValidJson(data any, fields ...string) error {
+	err := c.BindJSON(data)
+	if err != nil {
+		return nlog.Catch(err)
+	}
+	err = validator.New().StructPartial(data, fields...)
+	if err != nil {
+		return nlog.Catch(err)
+	}
+	return nil
 }
 
 func (c *Context) StatusCode() int {
