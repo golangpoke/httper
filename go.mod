@@ -4,7 +4,7 @@ go 1.23
 
 require (
 	github.com/go-playground/validator/v10 v10.24.0
-	github.com/golangpoke/nlog v1.0.2
+	github.com/golangpoke/nlog v0.0.0-20250215084800-7810e8155481
 )
 
 require (

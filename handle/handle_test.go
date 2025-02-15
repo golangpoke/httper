@@ -32,7 +32,7 @@ func TestUnitHandle(t *testing.T) {
 		}{}
 		err := c.BindJSON(&data)
 		if err != nil {
-			return result.ErrBadRequest.With(err)
+			return result.ErrBadRequest.Wrap(err)
 		}
 		return result.Map{
 			"data": data,

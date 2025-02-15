@@ -10,6 +10,10 @@ github.com/go-playground/universal-translator v0.18.1 h1:Bcnm0ZwsGyWbCzImXv+pAJn
 github.com/go-playground/universal-translator v0.18.1/go.mod h1:xekY+UJKNuX9WP91TpwSH2VMlDf28Uj24BCp08ZFTUY=
 github.com/go-playground/validator/v10 v10.24.0 h1:KHQckvo8G6hlWnrPX4NJJ+aBfWNAE/HH+qdL2cBpCmg=
 github.com/go-playground/validator/v10 v10.24.0/go.mod h1:GGzBIJMuE98Ic/kJsBXbz1x/7cByt++cQ+YOuDM5wus=
+github.com/golangpoke/nlog v0.0.0-20250215082311-1392de9c11a8 h1:b2J8Hn2QjKgbmwS8pN2N8AdQJGVmhPWdPZBXEW3tXvQ=
+github.com/golangpoke/nlog v0.0.0-20250215082311-1392de9c11a8/go.mod h1:fAsOCbdIJRQoxxa57Ca2CyMvjXFGh6zEohBhWgWIJ1U=
+github.com/golangpoke/nlog v0.0.0-20250215084800-7810e8155481 h1:RgiVLvZeqUxFCh+e2KCqah5J2OGF+yMb9OHGZL65i8A=
+github.com/golangpoke/nlog v0.0.0-20250215084800-7810e8155481/go.mod h1:fAsOCbdIJRQoxxa57Ca2CyMvjXFGh6zEohBhWgWIJ1U=
 github.com/golangpoke/nlog v1.0.2 h1:TrQN0TkUdTnCi5AInl01jPliMEiIGwid+MjzsVvrDb0=
 github.com/golangpoke/nlog v1.0.2/go.mod h1:fAsOCbdIJRQoxxa57Ca2CyMvjXFGh6zEohBhWgWIJ1U=
 github.com/leodido/go-urn v1.4.0 h1:WT9HwE9SGECu3lg4d/dIA+jxlljEa1/ffXKmRjqdmIQ=

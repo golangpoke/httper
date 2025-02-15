@@ -3,7 +3,9 @@ package httper_test
 import (
 	"github.com/golangpoke/httper"
 	"github.com/golangpoke/httper/handle"
+	"github.com/golangpoke/httper/middle"
 	"github.com/golangpoke/httper/result"
+	"github.com/golangpoke/nlog"
 	"testing"
 )
 
@@ -12,20 +14,23 @@ type Data struct {
 }
 
 func TestServeMux_Run(t *testing.T) {
+	defer nlog.Recovery()
+	nlog.SetDefault(nlog.LvlDebug)
 	mux := httper.NewServeMux()
+	mux.Use(middle.CORS(), middle.Logger(), middle.Recovery())
 	mux.POST("/", handle.ResultHandle(func(c *handle.Context) result.Result {
 		var data Data
 		err := c.BindValidJson(&data, "Hello")
 		if err != nil {
-			return result.ErrBadRequest.With(err)
+			return result.ErrBadRequest.Wrap(err)
 		}
 		// err := c.BindJSON(&data)
 		// if err != nil {
-		// 	return result.ErrBadRequest.With(err)
+		// 	return result.ErrBadRequest.Wrap(err)
 		// }
 		// err = validator.New().StructPartial(data, "Hello")
 		// if err != nil {
-		// 	return result.ErrBadRequest.With(err)
+		// 	return result.ErrBadRequest.Wrap(err)
 		// }
 		return result.Map{
 			"data": data,

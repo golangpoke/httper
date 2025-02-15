@@ -9,7 +9,7 @@ import (
 
 func TestResult(t *testing.T) {
 	err := os.ErrNotExist
-	resultImplement := result.ErrInternalServerError.With(err)
+	resultImplement := result.ErrInternalServerError.Wrap(err)
 	HandleResult(resultImplement)
 	codeImplement := result.ErrBadRequest
 	HandleResult(codeImplement)

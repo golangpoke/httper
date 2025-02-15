@@ -1,5 +1,7 @@
 package result
 
+import "github.com/golangpoke/nlog"
+
 const Success code = "0x0000"
 
 const (
@@ -43,10 +45,10 @@ func (c code) Error() error {
 	return nil
 }
 
-// With catch error
-func (c code) With(err error) Result {
+// Wrap catch error
+func (c code) Wrap(err error) Result {
 	return &result{
 		code: c,
-		err:  err,
+		err:  nlog.SkipWrap(err, 1),
 	}
 }

@@ -44,11 +44,11 @@ func (c *Context) Method() string {
 func (c *Context) BindJSON(data any) error {
 	body, err := io.ReadAll(c.request.Body)
 	if err != nil {
-		return nlog.Catch(err)
+		return nlog.Wrap(err)
 	}
 	err = json.Unmarshal(body, data)
 	if err != nil {
-		return nlog.Catch(err)
+		return nlog.Wrap(err)
 	}
 	return nil
 }
@@ -56,11 +56,11 @@ func (c *Context) BindJSON(data any) error {
 func (c *Context) BindValidJson(data any, fields ...string) error {
 	err := c.BindJSON(data)
 	if err != nil {
-		return nlog.Catch(err)
+		return nlog.Wrap(err)
 	}
 	err = validator.New().StructPartial(data, fields...)
 	if err != nil {
-		return nlog.Catch(err)
+		return nlog.Wrap(err)
 	}
 	return nil
 }

@@ -2,6 +2,7 @@ package handle
 
 import (
 	"github.com/golangpoke/httper/result"
+	"github.com/golangpoke/nlog"
 	"net/http"
 )
 
@@ -21,7 +22,8 @@ var UnitResultHandle = func(c *Context, rs result.Result) {
 	m := make(map[string]any)
 	if rs.Error() != nil || rs.Code() != result.Success {
 		status = http.StatusInternalServerError
-		m["error"] = rs.Error().Error()
+		m["error"] = nlog.UnWrap(rs.Error()).Error()
+		nlog.NoSource().ERROf("%v", rs.Error())
 	}
 	if msg := result.MapCodeMessage[rs.Code()]; msg != "" {
 		m["message"] = msg
@@ -30,6 +32,7 @@ var UnitResultHandle = func(c *Context, rs result.Result) {
 		m["data"] = rs.Data()
 	}
 	m["code"] = rs.Code()
+
 	err := c.JSON(status, m)
 	if err != nil {
 		http.Error(c, err.Error(), http.StatusInternalServerError)
